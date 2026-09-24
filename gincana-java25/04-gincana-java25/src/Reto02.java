@@ -49,17 +49,14 @@ public class Reto02 {
         }
     }
 
-    // Convierte un boolean en "TRUE" o "FALSE"
     static String aTexto(boolean valor) {
         return String.valueOf(valor).toUpperCase(Locale.ROOT);
     }
 
-    // Compara dos estudiantes y devuelve TRUE/FALSE en texto
     static String comparar(Student x, Student y) {
         return aTexto(x.equals(y));
     }
 
-    // Crea un HashSet con los tres estudiantes
     static Set<Student> crearSet(Student a, Student b, Student c) {
         Set<Student> students = new HashSet<>();
         students.add(a);
@@ -68,7 +65,6 @@ public class Reto02 {
         return students;
     }
 
-    // Construye la última línea con el formato exigido
     static String generarClave(String igualdadAB, String igualdadAC, int tamanoSet) {
         return "CLAVE=R2-" + igualdadAB + "-" + igualdadAC + "-" + tamanoSet;
     }
