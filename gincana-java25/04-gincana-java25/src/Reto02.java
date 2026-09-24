@@ -18,5 +18,74 @@
 //
 //Usa TRUE/FALSE en mayusculas (String.valueOf(boolean).toUpperCase(Locale.ROOT)).
 
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
+
 public class Reto02 {
+
+    public record Student(String name, int age) {
+
+        public Student {
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("El nombre no puede estar vacío");
+            }
+            if (age < 0) {
+                throw new IllegalArgumentException("La edad no puede ser negativa");
+            }
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Student other)) return false;
+            return age == other.age && name.equalsIgnoreCase(other.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name.toLowerCase(Locale.ROOT), age);
+        }
+    }
+
+    // Convierte un boolean en "TRUE" o "FALSE"
+    static String aTexto(boolean valor) {
+        return String.valueOf(valor).toUpperCase(Locale.ROOT);
+    }
+
+    // Compara dos estudiantes y devuelve TRUE/FALSE en texto
+    static String comparar(Student x, Student y) {
+        return aTexto(x.equals(y));
+    }
+
+    // Crea un HashSet con los tres estudiantes
+    static Set<Student> crearSet(Student a, Student b, Student c) {
+        Set<Student> students = new HashSet<>();
+        students.add(a);
+        students.add(b);
+        students.add(c);
+        return students;
+    }
+
+    // Construye la última línea con el formato exigido
+    static String generarClave(String igualdadAB, String igualdadAC, int tamanoSet) {
+        return "CLAVE=R2-" + igualdadAB + "-" + igualdadAC + "-" + tamanoSet;
+    }
+
+    public static void main(String[] args) {
+        Student a = new Student("Ada", 30);
+        Student b = new Student("ada", 30);
+        Student c = new Student("Joe", 25);
+
+        String igualdadAB = comparar(a, b);
+        String igualdadAC = comparar(a, c);
+        int tamanoSet = crearSet(a, b, c).size();
+
+        System.out.println("a.equals(b): " + igualdadAB);
+        System.out.println("a.equals(c): " + igualdadAC);
+        System.out.println("Tamano del set: " + tamanoSet);
+
+        System.out.println(generarClave(igualdadAB, igualdadAC, tamanoSet));
+    }
 }
